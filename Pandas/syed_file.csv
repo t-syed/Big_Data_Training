@@ -1,0 +1,11 @@
+EmployeeID,Name,Department,Salary,SalaryAfterTax
+1,John,Engineering,55000,45375.0
+2,Anna,Marketing,46000,37950.0
+3,Peter,Engineering,60000,49500.0
+4,Linda,HR,75000,61875.0
+5,James,Marketing,49000,40425.0
+6,Patricia,Engineering,52000,42900.0
+7,Michael,HR,82000,67650.0
+8,Elizabeth,Engineering,67000,55275.0
+9,David,Marketing,43000,35475.0
+10,Susan,HR,90000,74250.0
