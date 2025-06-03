@@ -14,11 +14,14 @@ spark = SparkSession.builder.appName("LoadCSV").getOrCreate()
 
 df_employee = spark.read.csv("/tmp/US_UK_05052025/syed/datasets/employees.csv", header=True, inferSchema=True)
 df_department = spark.read.csv("/tmp/US_UK_05052025/syed/datasets/departments.csv", header=True, inferSchema=True)
+df_projects = spark.read.csv("/tmp/US_UK_05052025/syed/datasets/projects.csv", header=True, inferSchema=True)
+
 
 num_rows = df_employee.count()
 num_cols = len(df_employee.columns)
+print("DataFrame shape: ({}, {})".format(num_rows, num_cols))
 
-print(f"Shape: ({num_rows}, {num_cols})")
+# print(f"Shape: ({num_rows}, {num_cols})")
 
 
 # Get summary statistics (mean, median, mode, std) of numerical columns.
@@ -31,11 +34,17 @@ median_val = df_employee.approxQuantile(column, [0.5], 0.01)[0]  # 1% relative e
 mode_val = df_employee.groupBy(column).count().orderBy(desc("count")).first()[0]
 
 # Print results
-print(f"📊 Statistics for column '{column}':")
-print(f"Mean (Average): {mean_val}")
-print(f"Median: {median_val}")
-print(f"Mode: {mode_val}")
-print(f"Standard Deviation: {std_val}")
+print("Statistics for column '{}':".format(column))
+print("Mean (Average): {}".format(mean_val))
+print("Median: {}".format(median_val))
+print("Mode: {}".format(mode_val))
+print("Standard Deviation: {}".format(std_val))
+
+# print(" Statistics for column '{column}':")
+# print(f"Mean (Average): {mean_val}")
+# print(f"Median: {median_val}")
+# print(f"Mode: {mode_val}")
+# print(f"Standard Deviation: {std_val}")
 
 
 # alternative this comman can be used
@@ -67,7 +76,7 @@ df_filtered.show()
 
 # Select specific columns from the DataFrame.
 
-df_employee.select("EmpID", "Salary").Show()
+df_employee.select("EmpID", "Salary").show()
 
 # drop a specific column in a table
 df_dropped = df_projects.drop("ProjectName")
@@ -96,8 +105,8 @@ df_sorted.show()
 
 # Merge two DataFrames on a common column.
 
-df_merged = df_employee.join(df_projects, on="EmployeeID", how="inner")
-df_merged.show()
+df_join = df_employee.join(df_projects, df_employee.EmployeeID == df_projects.EmployeeID, "inner")
+df_join.show()
 
 # Join two DataFrames using an index.
 
